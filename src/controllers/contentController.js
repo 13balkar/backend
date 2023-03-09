@@ -16,4 +16,18 @@ const addContent = async (req, res) => {
   }
 };
 
-module.exports = { addContent };
+const getAllContents = async (req, res) => {
+  try {
+    const contents = await contentService.getAllContents();
+    res.status(200).send(contents);
+  } catch (err) {
+    if (err instanceof httpErrors) {
+      res.status(err.code).send({ 'message': err.message });
+    }
+    else {
+      res.status(500).send({ 'message': 'Internal server error.' });
+    }
+  }
+};
+
+module.exports = { addContent, getAllContents };
