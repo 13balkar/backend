@@ -31,7 +31,6 @@ const getContentByNameValidator = (req, res, next) => {
 };
 
 const changeNameSchema = Joi.object({
-  content_name: Joi.string().required(),
   newContentName: Joi.string().required()
 });
 const changeNameValidator = (req, res, next) => {
