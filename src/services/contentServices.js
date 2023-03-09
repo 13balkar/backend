@@ -10,4 +10,9 @@ const addContent = async (content_name, columns) => {
   return createdContent;
 };
 
-module.exports = { addContent, getAllContents };
+const getContentByName = async (content_name) => {
+  const contentByName = await content.findOne({ where: { content_name } });
+  return contentByName;
+};
+
+module.exports = { addContent, getAllContents, getContentByName };

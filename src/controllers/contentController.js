@@ -30,4 +30,19 @@ const getAllContents = async (req, res) => {
   }
 };
 
-module.exports = { addContent, getAllContents };
+const getContentByName = async (req, res) => {
+  try {
+    const { content_name } = req.params;
+    const content = await contentService.getContentByName(content_name);
+    res.status(200).send(content);
+  } catch (err) {
+    if (err instanceof httpErrors) {
+      res.status(err.code).send({ 'message': err.message });
+    }
+    else {
+      res.status(500).send({ 'message': 'Internal server error.' });
+    }
+  }
+};
+
+module.exports = { addContent, getAllContents, getContentByName };
