@@ -1,9 +1,11 @@
 const express = require('express');
 const collectionRouter = express.Router();
-const { validateGetCollectionEntries } = require('../middleware/collectionValidator');
-const { getCollectionEntries, addCollectionEntity } = require('../controllers/collectionController');
+const { validateGetCollectionEntries, validateAddCollectionEntity, validateDeleteCollectionEntity, validateUpdateCollectionEntity } = require('../middleware/collectionValidator');
+const { getCollectionEntries, addCollectionEntity, deleteCollectionEntity, updateCollectionEntity } = require('../controllers/collectionController');
 
 collectionRouter.get('/:collection_name', validateGetCollectionEntries, getCollectionEntries);
-collectionRouter.post('/:collection_name', addCollectionEntity);
+collectionRouter.post('/:collection_name', validateAddCollectionEntity, addCollectionEntity);
+collectionRouter.delete('/:collection_name/:entity_id', validateDeleteCollectionEntity, deleteCollectionEntity);
+collectionRouter.put('/:collection_name/:entity_id', validateUpdateCollectionEntity, updateCollectionEntity);
 
 module.exports = collectionRouter;
