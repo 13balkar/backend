@@ -45,4 +45,69 @@ const getContentByName = async (req, res) => {
   }
 };
 
-module.exports = { addContent, getAllContents, getContentByName };
+const addField = async (req, res) => {
+  try {
+    const { columnArray } = req.body;
+    const { content_name } = req.params;
+    const content = await contentService.addField(columnArray, content_name);
+    res.status(200).send(content);
+  } catch (err) {
+    if (err instanceof httpErrors) {
+      res.status(err.code).send({ 'message': err.message });
+    }
+    else {
+      res.status(500).send({ 'message': 'Internal server error.' });
+    }
+  }
+};
+
+const deleteField = async (req, res) => {
+  try {
+    const { columnNames } = req.body;
+    const { content_name } = req.params;
+    const content = await contentService.deleteField(columnNames, content_name);
+    res.status(200).send(content);
+  } catch (err) {
+    if (err instanceof httpErrors) {
+      res.status(err.code).send({ 'message': err.message });
+    }
+    else {
+      res.status(500).send({ 'message': 'Internal server error.' });
+    }
+  }
+};
+
+const updateField = async (req, res) => {
+  try {
+    const { columnArray } = req.body;
+    const { content_name } = req.params;
+    const content = await contentService.updateField(columnArray, content_name);
+    res.status(200).send(content);
+  } catch (err) {
+    if (err instanceof httpErrors) {
+      res.status(err.code).send({ 'message': err.message });
+    }
+    else {
+      res.status(500).send({ 'message': 'Internal server error.' });
+    }
+  }
+};
+
+const changeName = async (req, res) => {
+  try {
+    const { content_name } = req.params;
+    const { newContentName } = req.body;
+    console.log(content_name, newContentName);
+    const content = await contentService.changeName(content_name, newContentName);
+    res.status(200).send(content);
+  } catch (err) {
+    if (err instanceof httpErrors) {
+      res.status(err.code).send({ 'message': err.message });
+    }
+    else {
+      res.status(500).send({ 'message': 'Internal server error.' });
+    }
+  }
+};
+
+module.exports = { addContent, getAllContents, getContentByName, addField, deleteField, updateField, changeName };
