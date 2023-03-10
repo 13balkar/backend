@@ -8,7 +8,6 @@ const getCollectionEntries = async (collection_name) => {
     return [];
   return collections;
 };
-
 const getCollections = async () => {
   const collections = await collection.findAll();
   if (collection === null)
@@ -24,7 +23,6 @@ const addCollectionEntity = async (collection_name, entryData) => {
 const deleteCollectionEntity = async (collection_name, entity_id) => {
   const deletedCollection = await collection.destroy({ where: { collection_name, id: entity_id } });
   return { deletedCollection, 'message': 'Collection entity deleted successfully.' };
-
 };
 
 const updateCollectionEntity = async (collection_name, entity_id, entryData) => {
