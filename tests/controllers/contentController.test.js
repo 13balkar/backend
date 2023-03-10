@@ -1,6 +1,7 @@
 const controller = require('../../src/controllers/contentController');
 const httpErrors = require('../../errors/httpErrors');
 const services = require('../../src/services/contentServices');
+const collectionService = require('../../src/services/collectionServices');
 
 describe('contentController', () => {
   describe('getAllContents', () => {
@@ -88,6 +89,7 @@ describe('contentController', () => {
   describe('addField', () => {
     it('should return 200 and success message when field is added successfully', async () => {
       jest.spyOn(services, 'addField').mockResolvedValue({ updatedContent: [1], message: 'Field added successfully' });
+      jest.spyOn(collectionService, 'addColumns').mockResolvedValue({ updatedCollection: [1], message: 'Collection updated successfully' });
       const req = { params: { content_name: 'test' }, body: { columnArray: [{ name: 'revenue', type: 'string' }] } };
       const res = {
         status: jest.fn().mockReturnThis(),
@@ -124,6 +126,7 @@ describe('contentController', () => {
   describe('deleteField', () => {
     it('should return 200 and success message when field is deleted successfully', async () => {
       jest.spyOn(services, 'deleteField').mockResolvedValue({ updatedContent: 1, message: 'Field deleted successfully' });
+      jest.spyOn(collectionService, 'deleteColumns').mockResolvedValue({ updatedCollection: 1, message: 'Collection updated successfully' });
       const req = { params: { content_name: 'test' }, body: { columnNames: ['revenue'] } };
       const res = { status: jest.fn().mockReturnThis(), send: jest.fn() };
       await controller.deleteField(req, res);
@@ -178,6 +181,7 @@ describe('contentController', () => {
   describe('changeName', () => {
     it('should return 200 and success message when name is changed successfully', async () => {
       jest.spyOn(services, 'changeName').mockResolvedValue([1]);
+      jest.spyOn(collectionService, 'changeName').mockResolvedValue([1]);
       const req = { params: { content_name: 'test' }, body: { newContentName: 'test' } };
       const res = { status: jest.fn().mockReturnThis(), send: jest.fn() };
       await controller.changeName(req, res);
