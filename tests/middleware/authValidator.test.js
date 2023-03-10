@@ -1,5 +1,4 @@
 const axios = require('axios');
-const httpErrors = require('../../errors/httpErrors');
 const validator = require('../../src/middleware/authValidator');
 
 jest.mock('axios');
