@@ -9,6 +9,13 @@ const getCollectionEntries = async (collection_name) => {
   return collections;
 };
 
+const getCollections = async () => {
+  const collections = await collection.findAll();
+  if (collection === null)
+    return [];
+  return collections;
+};
+
 const addCollectionEntity = async (collection_name, entryData) => {
   const createdCollection = await collection.create({ collection_name, entries: entryData });
   return createdCollection;
@@ -56,4 +63,4 @@ const deleteColumns = async (columnNames, collection_name) => {
   return { 'message': 'Field deleted successfully' };
 };
 
-module.exports = { getCollectionEntries, addCollectionEntity, deleteCollectionEntity, updateCollectionEntity, addColumns, changeName, deleteColumns };
+module.exports = { getCollectionEntries, addCollectionEntity, deleteCollectionEntity, updateCollectionEntity, addColumns, changeName, deleteColumns, getCollections };

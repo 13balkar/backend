@@ -64,4 +64,18 @@ const updateCollectionEntity = async (req, res) => {
   }
 };
 
-module.exports = { getCollectionEntries, addCollectionEntity, deleteCollectionEntity, updateCollectionEntity };
+const getCollections = async (req, res) => {
+  try {
+    const collections = await collectionService.getCollections();
+    res.status(200).send(collections);
+  } catch (err) {
+    if (err instanceof httpErrors) {
+      res.status(err.code).send({ 'message': err.message });
+    }
+    else {
+      res.status(500).send({ 'message': 'Internal server error.' });
+    }
+  }
+};
+
+module.exports = { getCollectionEntries, addCollectionEntity, deleteCollectionEntity, updateCollectionEntity, getCollections };
