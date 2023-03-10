@@ -1,6 +1,7 @@
 const httpErrors = require('../../errors/httpErrors');
 const contentService = require('../services/contentServices');
 const collectionService = require('../services/collectionServices');
+
 const addContent = async (req, res) => {
   try {
     const { content_name, columns } = req.body;

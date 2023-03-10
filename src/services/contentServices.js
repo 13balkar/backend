@@ -1,5 +1,5 @@
 const { content } = require('../../database/models');
-const HttpErrors = require('../../errors/httpErrors');
+const httpErrors = require('../../errors/httpErrors');
 
 const getAllContents = async () => {
   const contents = await content.findAll({ attributes: ['content_name'] });
@@ -20,7 +20,7 @@ const addField = async (columnArray, content_name) => {
   // console.log(columnArray);
   const getContent = await content.findOne({ where: { content_name } });
   if (!getContent) {
-    throw new HttpErrors.NotFound('Content not found');
+    throw new httpErrors('Content not found', 404);
   }
   let contentFields = getContent.columns;
   contentFields = contentFields.concat(columnArray);
@@ -32,18 +32,18 @@ const addField = async (columnArray, content_name) => {
 const deleteField = async (columnNames, content_name) => {
   const getContent = await content.findOne({ where: { content_name } });
   if (!getContent) {
-    throw new HttpErrors.NotFound('Content not found');
+    throw new httpErrors('Content not found', 404);
   }
   let contentFields = getContent.columns;
   contentFields = contentFields.filter((field) => !columnNames.includes(field.name));
   const updatedContent = await content.update({ columns: contentFields }, { where: { content_name } });
-  return { updatedContent, 'message': 'Field added successfully' };
+  return { updatedContent, 'message': 'Field deleted successfully' };
 };
 
 const updateField = async (columnArray, content_name) => {
   const getContent = await content.findOne({ where: { content_name } });
   if (!getContent) {
-    throw new HttpErrors.NotFound('Content not found');
+    throw new httpErrors('Content not found', 404);
   }
   let contentFields = getContent.columns;
   contentFields = contentFields.map((field) => {
@@ -57,13 +57,13 @@ const updateField = async (columnArray, content_name) => {
     return field;
   });
   const updatedContent = await content.update({ columns: contentFields }, { where: { content_name } });
-  return { updatedContent, 'message': 'Field added successfully' };
+  return { updatedContent, 'message': 'Field updated successfully' };
 };
 
 const changeName = async (content_name, newContentName) => {
   const getContent = await content.findOne({ where: { content_name } });
   if (!getContent) {
-    throw new HttpErrors.NotFound('Content not found');
+    throw new httpErrors('Content not found', 404);
   }
   const updatedContent = await content.update({ content_name: newContentName }, { where: { content_name } });
   return updatedContent;
